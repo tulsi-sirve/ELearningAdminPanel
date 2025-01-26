@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="dashboardstyles.css">
+</head>
+<body>
+    <header>
+        <h1>Reports</h1>
+    </header>
+    <main>
+        <h2>Generate and Download Reports</h2>
+        <button id="generate-report-button">Generate Report</button>
+        <div id="report-output" style="display: none;">
+            <h3>Generated Report</h3>
+            <pre id="report-content"></pre>
+        </div>
+        <button id="download-report-button" style="display: none;">Download Report</button>
+        <button onclick="logout()">Logout</button>
+    </main>
+    <script>
+        document.getElementById('generate-report-button').addEventListener('click', function() {
+            const reportContent = `Report ID: 12345
+Generated on: ${new Date().toLocaleString()}
+Report Summary:
+Total Users: 150
+Active Sessions: 45
+New Registrations: 10`;
+
+            document.getElementById('report-content').textContent = reportContent;
+            document.getElementById('report-output').style.display = 'block';
+            document.getElementById('download-report-button').style.display = 'inline-block';
+        });
+
+        document.getElementById('download-report-button').addEventListener('click', function() {
+            const reportContent = document.getElementById('report-content').textContent;
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'report.txt';
+            link.click();
+        });
+
+        function logout() {
+            window.location.href = "index.html"; // Redirect back to login
+        }
+    </script>
+</body>
+</html>

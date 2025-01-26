@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses Management</title>
+    <link rel="stylesheet" href="dashboardstyles.css">
+</head>
+<body>
+    <header>
+        <h1>Courses Management</h1>
+    </header>
+    <main>
+        <h2>Manage Courses</h2>
+        <button id="add-course-button">Add New Course</button>
+        <table id="course-list">
+            <thead>
+                <tr>
+                    <th>Course ID</th>
+                    <th>Course Name</th>
+                    <th>Instructor</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically filled course list -->
+            </tbody>
+        </table>
+        <button onclick="logout()">Logout</button>
+    </main>
+    <script>
+        let courses = [
+            { id: 1, name: 'JavaScript Basics', instructor: 'John Doe' },
+            { id: 2, name: 'Advanced Python', instructor: 'Jane Smith' }
+        ];
+
+        function renderCourses() {
+            const tableBody = document.querySelector('#course-list tbody');
+            tableBody.innerHTML = '';
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${course.id}</td>
+                    <td>${course.name}</td>
+                    <td>${course.instructor}</td>
+                    <td><button onclick="deleteCourse(${course.id})">Delete</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function deleteCourse(courseId) {
+            courses = courses.filter(course => course.id !== courseId);
+            renderCourses();
+        }
+
+        document.getElementById('add-course-button').addEventListener('click', function() {
+            const newCourse = { id: courses.length + 1, name: 'New Course', instructor: 'New Instructor' };
+            courses.push(newCourse);
+            renderCourses();
+        });
+
+        renderCourses();
+        
+        function logout() {
+            window.location.href = "index.html"; // Redirect back to login
+        }
+    </script>
+</body>
+</html>
